@@ -20,6 +20,9 @@
 	<property name="luceeCFconfig" value=""/>
 	<!-- enable java debugging -->
 	<property name="debugger" value=""/>
+	<property name="cleanup" value="true"/>
+	<property name="setAdminPassword" value="true"/>
+	<property name="adminPassword" value="admin"/>
 
 	<!-- scripts can be run as an include, or via internalRequest (default) which picks up any Application.cfc -->
 	<property name="executeScriptByInclude" value=""/>
@@ -85,6 +88,8 @@
 		<echo message="executeScriptByInclude: ${executeScriptByInclude}" />
 		<echo message="luceeCFconfig: ${luceeCFconfig}" />
 		<echo message="javaDebugger: ${debugger}" />
+		<echo message="setAdminPassword: ${setAdminPassword}" />
+		<echo message="adminPassword: ${adminPassword}" />
 
 		<echo message="" />
 		<!-- execute CFML testcases -->
@@ -114,6 +119,9 @@
 			<jvmarg value="-Dlucee.extensions=${extensions}"/>
 			<jvmarg value="-Dlucee.mapping.first=true"/>
 			<jvmarg value="-Dcompile=${compile}"/>
+			<jvmarg value="-DsetAdminPassword=${setAdminPassword}"/>
+			<jvmarg value="-DadminPassword=${adminPassword}"/>
+
 			<!--
 			<jvmarg value="-Dlucee.cli.printExceptions=true"/>
 			-->
@@ -131,7 +139,7 @@
 			-->
 		</java>
 		<echo>${errorOut}</echo>
-		<delete dir="${temp}"/>
+		<delete dir="${temp}" if:true="${cleanup}"/>
 		<echo message="Finished!" />
 	</target>
 </project>
